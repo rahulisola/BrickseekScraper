@@ -58,6 +58,7 @@ if __name__ == '__main__':
 	# This is to ensure that larger (in area) zip codes with multiple stores are not ignored if a store is far away.
 	# All this is done to reduce the number of wasted calls that'll be done to Brickseek for stores that have already been retrieved within results of another zip code.
 	while zipcodes:
+		print('Processing...')
 		zip = zipcodes.pop(0) # Once a zip is processed, remove it from the list
 		StoreList = processInput(sku, zip)
 		for store in StoreList:
