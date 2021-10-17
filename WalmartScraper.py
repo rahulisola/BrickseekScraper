@@ -17,7 +17,7 @@ def processInput(sku, zip):
 		'Content-type': 'application/x-www-form-urlencoded'
 		}
 	r = requests.post(url, data=payload, headers = header_info)    # Make a POST request with data
-	print("Zip Code: " + zip + ": " + str(r.status_code))
+	# print("Zip Code: " + zip + ": " + str(r.status_code))
 	
 	tree = html.fromstring(clean_html(r.content))    # Parse response from the page with lxml.html
 
