@@ -9,7 +9,6 @@ from pyzipcode import ZipCodeDatabase
 
 def processInput(sku, zip):
 	FinalStoresList = []
-	#for zip in zipcodes:
 	url = 'https://brickseek.com/walmart-inventory-checker/'
 	payload = {'method': 'sku', 'sku': sku, 'zip': zip, 'sort': 'price'}
 	header_info = {
@@ -17,7 +16,6 @@ def processInput(sku, zip):
 		'Content-type': 'application/x-www-form-urlencoded'
 		}
 	r = requests.post(url, data=payload, headers = header_info)    # Make a POST request with data
-	# print("Zip Code: " + zip + ": " + str(r.status_code))
 	
 	tree = html.fromstring(clean_html(r.content))    # Parse response from the page with lxml.html
 
@@ -36,7 +34,6 @@ def processInput(sku, zip):
 			FinalStoresList.append(item)
 		except IndexError:
 			pass
-	time.sleep(5)
 	return FinalStoresList
 		
 if __name__ == '__main__':
@@ -48,6 +45,7 @@ if __name__ == '__main__':
 	sku = input("Enter SKU: ")
 	input_zip = input("Enter source zip code: ")
 	input_radius = input("Enter radius from entered zip code (in miles): ")
+	sleep_duration = int(input("Enter rate limiting factor (seconds to wait after each request): "))
 
 	#Use the ZipCodeDatabase to generate a list of zip codes within the requested radius of a source zip code.
 	in_radius = [z.zip for z in zcdb.get_zipcodes_around_radius(input_zip, input_radius)]
@@ -69,6 +67,7 @@ if __name__ == '__main__':
 			if(float(store.pop('Distance', 0.0))<5.0 and store['ZipCode'] in zipcodes):
 				zipcodes.remove(store['ZipCode'])
 		FinalList.extend(StoreList)
+		time.sleep(sleep_duration)
 	
 	new_l = [dict(t) for t in {tuple(d.items()) for d in FinalList}]
 	print(new_l)
