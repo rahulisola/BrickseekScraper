@@ -49,14 +49,23 @@ if __name__ == '__main__':
 	input_zip = input("Enter source zip code: ")
 	input_radius = input("Enter radius from entered zip code (in miles): ")
 
+	#Use the ZipCodeDatabase to generate a list of zip codes within the requested radius of a source zip code.
 	in_radius = [z.zip for z in zcdb.get_zipcodes_around_radius(input_zip, input_radius)]
 	zipcodes = in_radius
 
 	storeList = []
+	# Once a zip is processed, remove it from the list. This repeated removal is required because brickseek has it's own search radius that it uses.
+	# The following few lines will remove those zip code entries that were not initially requested explicitly by the script but still returned by Brickseek as part of the results.
+	# Note - this only removes it if the distance of the returned zip in the results is less than 5mi of the requested zip.
+	# This is to ensure that larger (in area) zip codes with multiple stores are not ignored if a store is far away.
+	# All this is done to reduce the number of wasted calls that'll be done to Brickseek for stores that have already been retrieved within results of another zip code.
 	while zipcodes:
-		zip = zipcodes.pop(0)
+		zip = zipcodes.pop(0) # Once a zip is processed, remove it from the list
 		StoreList = processInput(sku, zip)
 		for store in StoreList:
+			# Check the distance of the store from the requested zip. If < 5mi, remove the zip from the list.
+			# Once processed, then we need to remove (pop) distance attribute from the dictionary, since it is relative to each request and is useless for the final results.
+			# Removing it also helps us remove duplicates and return unique list of stores and inventory results.
 			if(float(store.pop('Distance', 0.0))<5.0 and store['ZipCode'] in zipcodes):
 				zipcodes.remove(store['ZipCode'])
 		FinalList.extend(StoreList)
