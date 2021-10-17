@@ -45,7 +45,7 @@ if __name__ == '__main__':
 	
 	zcdb = ZipCodeDatabase()
 
-	sku = input("Enter SKU: ") # "365229784"
+	sku = input("Enter SKU: ")
 	input_zip = input("Enter source zip code: ")
 	input_radius = input("Enter radius from entered zip code (in miles): ")
 
@@ -57,11 +57,12 @@ if __name__ == '__main__':
 		zip = zipcodes.pop(0)
 		StoreList = processInput(sku, zip)
 		for store in StoreList:
-			if(float(store['Distance'])<5.0 and store['ZipCode'] in zipcodes):
+			if(float(store.pop('Distance', 0.0))<5.0 and store['ZipCode'] in zipcodes):
 				zipcodes.remove(store['ZipCode'])
 		FinalList.extend(StoreList)
 	
 	new_l = [dict(t) for t in {tuple(d.items()) for d in FinalList}]
+	print(new_l)
 	keys = new_l[0].keys()
 	with open('out.csv', 'w', newline='') as output_file:
 		dict_writer = csv.DictWriter(output_file, keys)
