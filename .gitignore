@@ -5,4 +5,5 @@
 /.vs/slnx.sqlite
 /.vs/VSWorkspaceState.json
 /.vs/BrickseekScraper/v16/.suo
-/out.csv
+/*.csv
+/__pycache__
