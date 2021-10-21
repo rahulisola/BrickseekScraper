@@ -6,7 +6,7 @@ from BrickseekScraper import BrickseekScraper
 if __name__ == '__main__':
 	zcdb = ZipCodeDatabase()
 
-	Stores = ["Walmart", "Lowes", "HomeDepot"]
+	Stores = ["Walmart", "Lowes", "Home-Depot"]
 	while True:
 		try:
 			StoreNo = int(input("Select Store:\r\n\t" + "\r\n\t".join([store+" ["+str(index+1)+"]"  for index, store in enumerate(Stores)]) + "\r\nEnter selection #: "))
