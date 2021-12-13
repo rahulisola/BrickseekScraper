@@ -1,4 +1,4 @@
 requests==2.24.0
 pyzipcode==3.0.1
-lxml==4.6.3
+lxml==4.6.5
 pyzipcode==3.0.1
