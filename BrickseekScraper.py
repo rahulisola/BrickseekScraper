@@ -4,6 +4,7 @@ from lxml import html
 from lxml.html.clean import clean_html
 import time
 import re
+import cloudscraper
 
 class BrickseekScraper:
 	@staticmethod
@@ -15,7 +16,9 @@ class BrickseekScraper:
 			'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36',
 			'Content-type': 'application/x-www-form-urlencoded'
 			}
-		r = requests.post(url, data=payload, headers = header_info)    # Make a POST request with data
+		scraper = cloudscraper.create_scraper()  # returns a CloudScraper instance
+		r = scraper.post(url, data=payload, headers = header_info)    # Make a POST request with data
+		#r = requests.post(url, data=payload, headers = header_info)    # Make a POST request with data
 		if not r.ok:
 			print('Request error HTTP Code: ' + str(r.status_code))
 
