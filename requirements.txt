@@ -1,10 +1,4 @@
 requests==2.24.0
 pyzipcode==3.0.1
-<<<<<<< HEAD
-lxml==4.6.3
-pyzipcode==3.0.1
 cloudscraper>=1.2.66
-=======
 lxml==4.9.1
-pyzipcode==3.0.1
->>>>>>> 783517c2162f9377260e576fea6e389e456a0b88
