@@ -1,4 +1,4 @@
-requests==2.24.0
+requests==2.31.0
 pyzipcode==3.0.1
 cloudscraper>=1.2.66
 lxml==4.9.1
